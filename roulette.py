@@ -2,12 +2,13 @@
 
 import random
 import numpy as np
+from tqdm import trange
 
 
 DEPOSIT = 1000
 BET = 100
 TARGET = 3000
-NUM_SIMS = 100000
+NUM_SIMS = 1000000
 CASHBACK = 0.07
 
 
@@ -24,7 +25,7 @@ def roulette_bet(deposit,bet,target):
 
 def simulate(deposit, bet, target,num_sims, cashback):
 	results =[]
-	for i in range(num_sims):
+	for i in trange(num_sims):
 		result= roulette_bet(deposit, bet, target)
 		if result < 0:
 			results.append(result*(1-cashback))
