@@ -6,7 +6,7 @@ from tqdm import trange
 
 
 DEPOSIT = 1000
-BET = 80
+BET = 100
 TARGET = 3000
 NUM_SIMS = 100000
 CASHBACK = 0.07
@@ -40,7 +40,8 @@ def simulate(deposit, bet, target,num_sims, cashback):
 
 def main():
 	simulation = np.array(simulate(DEPOSIT, BET, TARGET, NUM_SIMS, CASHBACK))
-	print('EV for this simulation is: {:.2f}'.format(simulation.mean()))
+	print(f'EV for this simulation is: {simulation.mean():.2f}')
+	print(f'Max win: {simulation.max()}   Max loss: {simulation.min():.1f}')
 	#roulette_bet(DEPOSIT, BET, TARGET)
 
 if __name__ == '__main__':
