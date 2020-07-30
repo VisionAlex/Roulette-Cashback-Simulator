@@ -3,6 +3,7 @@
 import random
 import numpy as np
 from tqdm import trange
+from multiprocessing import Process, Pool
 
 
 DEPOSIT = 1000
@@ -20,22 +21,21 @@ def roulette_bet(deposit,bet,target):
 	return balance -deposit
 
 
-def simulate(deposit, bet, target,num_sims, cashback):
-	results =[]
-	for i in trange(num_sims):
-		result= roulette_bet(deposit, bet, target)
-		if result < 0:
-			results.append(result*(1-cashback))
+def simulate_one_deposit(deposit, bet, target, cashback):
+		result = roulette_bet(deposit, bet, target)
+		if  result < 0:
+			return result*(1-cashback)
 		else:
-			results.append(result)
-	return results
+			return result
 
+def simulate(num_sims):
+	return [simulate_one_deposit(DEPOSIT,BET, TARGET, CASHBACK) for _ in range(num_sims)]
 
 def main():
-	simulation = np.array(simulate(DEPOSIT, BET, TARGET, NUM_SIMS, CASHBACK))
+	data = Pool().map(simulate,[NUM_SIMS]*8)
+	simulation =np.array(data)
 	print(f'EV for this simulation is: {simulation.mean():.2f}')
 	print(f'Max win: {simulation.max()}   Max loss: {simulation.min():.1f}')
-	# print(roulette_bet(DEPOSIT, BET, TARGET))
 
 if __name__ == '__main__':
 	main()
