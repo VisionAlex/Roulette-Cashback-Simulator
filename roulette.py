@@ -40,7 +40,7 @@ def simulate(deposit, bet, target,num_sims, cashback):
 
 def main():
 	simulation = np.array(simulate(DEPOSIT, BET, TARGET, NUM_SIMS, CASHBACK))
-	print(f'EV for this simulation is: {simulation.mean()}')
+	print('EV for this simulation is: {:.2f}'.format(simulation.mean()))
 	#roulette_bet(DEPOSIT, BET, TARGET)
 
 if __name__ == '__main__':
